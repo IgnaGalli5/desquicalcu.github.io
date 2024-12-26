@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculos Desquiciados - Científica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <body>
+        <header>
+            <h1>Cálculos Desquiciados - Científica</h1>
+        </header>
+    
+        <main>
+            <div class="calculadora">
+                <!-- Pantalla de la calculadora -->
+                <div class="pantalla" aria-live="polite">0</div>
+                <!-- Contenedor de botones -->
+                <div class="botones">
+                    <!-- Botones de la calculadora. El atributo data-accion se usa para identificar la acción en JavaScript -->
+                    <button class="operador" data-accion="limpiar">C</button>
+                    <button class="operador" data-accion="borrar">←</button>
+                    <button class="operador" data-accion="parentesis">()</button>
+                    <button class="operador" data-accion="porcentaje">%</button>
+                    <button class="operador" data-accion="dividir">÷</button>
+                    <button class="funcion" data-accion="sin">sin</button>
+                    <button class="numero">7</button>
+                    <button class="numero">8</button>
+                    <button class="numero">9</button>
+                    <button class="operador" data-accion="multiplicar">×</button>
+                    <button class="funcion" data-accion="cos">cos</button>
+                    <button class="numero">4</button>
+                    <button class="numero">5</button>
+                    <button class="numero">6</button>
+                    <button class="operador" data-accion="restar">-</button>
+                    <button class="funcion" data-accion="tan">tan</button>
+                    <button class="numero">1</button>
+                    <button class="numero">2</button>
+                    <button class="numero">3</button>
+                    <button class="operador" data-accion="sumar">+</button>
+                    <button class="funcion" data-accion="log">log</button>
+                    <button class="funcion" data-accion="ln">ln</button>
+                    <button class="numero">0</button>
+                    <button class="numero">.</button>
+                    <button class="operador" data-accion="igual">=</button>
+                    <button class="funcion" data-accion="exp">exp</button>
+                    <button class="funcion" data-accion="raiz">√</button>
+                    <button class="funcion" data-accion="potencia">^</button>
+                    <button class="funcion" data-accion="factorial">n!</button>
+                    <button class="funcion" data-accion="pi">π</button>
+                    <button class="funcion" data-accion="e">e</button>
+                </div>
+            </div>
+        </main>
+    
+        <footer>
+            <p>© 2023 Cálculos Desquiciados - Científica. Todos los derechos reservados.</p>
+            <nav>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos de uso</a>
+                <a href="#">Contacto</a>
+            </nav>
+        </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
