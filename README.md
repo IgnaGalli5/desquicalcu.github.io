@@ -1,0 +1,1 @@
+This advanced calculator will not only help you with whatever you need, it will also let you know what it thinks of you and your calculations. Be careful, it may be a little sarcastic, but remember, machines have a very binary sense of humor.
