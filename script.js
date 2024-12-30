@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Variables de estado
     let valorActual = '0';
     let parentesisAbiertos = 0;
+    let ultimoResultado = '';
 
     // Objeto con frases burlonas categorizadas
     const frasesBurlonas = {
@@ -75,9 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} valor - Valor ingresado por el usuario
      */
     function manejarInput(valor) {
+        const operadores = ['+', '-', '*', '/', '^'];
+        const funciones = ['sin', 'cos', 'tan', 'log', 'ln', 'exp', 'sqrt'];
+        
         if (!isNaN(valor) || valor === '.') {
-            // Manejo de números y punto decimal
-            if (valorActual === '0' && valor !== '.') {
+            // Si hay un resultado previo y se ingresa un número, comenzar una nueva operación
+            if (ultimoResultado !== '') {
+                valorActual = valor;
+                ultimoResultado = '';
+            } else if (valorActual === '0' && valor !== '.') {
                 valorActual = valor;
             } else {
                 valorActual += valor;
@@ -88,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'limpiar':
                     valorActual = '0';
                     parentesisAbiertos = 0;
+                    ultimoResultado = '';
                     break;
                 case 'borrar':
                     if (valorActual.length > 1) {
@@ -120,23 +128,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'sumar':
                     valorActual += '+';
                     break;
+                case 'potencia':
+                    valorActual += '^';
+                    break;
                 case 'igual':
                     try {
-                        // Evalúa la expresión y maneja posibles errores
                         let resultado = math.evaluate(valorActual);
-                        
-                        // Verifica si el resultado es un número válido
                         if (isNaN(resultado) || !isFinite(resultado)) {
                             throw new Error('Resultado no válido');
                         }
-                        
-                        // Redondea el resultado a un número razonable de decimales
                         resultado = Number(resultado.toFixed(10));
                         
+                        // Determinar el tipo de cálculo para el mensaje burlón
+                        let tipoCalculo = 'simple';
+                        if (valorActual.includes('sin') || valorActual.includes('cos') || valorActual.includes('tan') ||
+                            valorActual.includes('log') || valorActual.includes('ln') || valorActual.includes('sqrt')) {
+                            tipoCalculo = 'avanzado';
+                        } else if (valorActual.includes('*') || valorActual.includes('/') || valorActual.includes('^')) {
+                            tipoCalculo = 'intermedio';
+                        }
+                        
+                        // Mostrar solo el resultado y guardarlo como último resultado
                         valorActual = resultado.toString();
-                        mostrarMensaje(valorActual.includes('sin') || valorActual.includes('cos') || valorActual.includes('tan') ? 'avanzado' : 'intermedio');
+                        ultimoResultado = valorActual;
+                        mostrarMensaje(tipoCalculo);
                     } catch (error) {
                         valorActual = 'Error: ' + error.message;
+                        ultimoResultado = '';
                     }
                     break;
                 case 'sin':
@@ -151,9 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'raiz':
                     valorActual += 'sqrt(';
                     parentesisAbiertos++;
-                    break;
-                case 'potencia':
-                    valorActual += '^';
                     break;
                 case 'factorial':
                     valorActual += '!';
@@ -173,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
     botones.addEventListener('click', (e) => {
         if (e.target.matches('button')) {
             const boton = e.target;
-            const accion = boton.dataset.accion;
-            manejarInput(accion || boton.textContent);
+            const accion = boton.dataset.accion || boton.textContent;
+            manejarInput(accion);
         }
     });
 
@@ -193,6 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tecla === 'Escape') {
             e.preventDefault();
             manejarInput('limpiar');
+        } else if (tecla === '+') {
+            e.preventDefault();
+            manejarInput('sumar');
+        } else if (tecla === '-') {
+            e.preventDefault();
+            manejarInput('restar');
+        } else if (tecla === '*') {
+            e.preventDefault();
+            manejarInput('multiplicar');
+        } else if (tecla === '/') {
+            e.preventDefault();
+            manejarInput('dividir');
         }
     });
 });
